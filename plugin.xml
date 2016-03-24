@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-magnetometer"
+        version="0.1.0">
+
+  <name>Device Magnetometer</name>
+  <description>Cordova Device Magnetometer Plugin</description>
+  <author>Jason Yang</author>
+  <license>BSD</license>
+
+  <js-module src="www/Magnetic.js" name="Magnetic">
+    <clobbers target="Magnetic"/>
+  </js-module>
+
+  <js-module src="www/magnetometer.js" name="magnetometer">
+    <clobbers target="navigator.magnetometer"/>
+  </js-module>
+
+  <!-- android -->
+  <platform name="android">
+
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="Magnetometer">
+        <param name="android-package" value="com.android.plugins.MagnetometerListener"/>
+      </feature>
+    </config-file>
+
+    <source-file src="src/android/com/android/plugins/MagnetometerListener.java" target-dir="src/com/android/plugins"/>
+
+  </platform>
+
+  <!-- ios -->
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*">
+      <feature name="Magnetometer">
+        <param name="ios-package" value="CDVMagnetometer"/>
+      </feature>
+    </config-file>
+
+    <header-file src="src/ios/CDVMagnetometer.h"/>
+    <source-file src="src/ios/CDVMagnetometer.m"/>
+
+    <framework src="CoreLocation.framework"/>
+  </platform>
+
+</plugin>
