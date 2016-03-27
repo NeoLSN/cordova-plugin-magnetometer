@@ -19,6 +19,7 @@ var timers = {};
 
 // Array of listeners; used to keep track of when we should call start and stop.
 var listeners = [];
+var eventTimerId = null;
 
 // Last returned magnetic object from native
 var magnetic = null;
