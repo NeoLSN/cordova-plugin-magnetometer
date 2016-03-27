@@ -1,4 +1,4 @@
-Cordova Gyroscope Plugin
+Cordova Magnetometer Plugin
 ========
 
 Description
