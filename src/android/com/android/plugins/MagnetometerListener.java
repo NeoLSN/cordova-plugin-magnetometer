@@ -38,7 +38,6 @@ public class MagnetometerListener extends CordovaPlugin implements SensorEventLi
     private float x, y, z;  // most recent speed values
     private long timestamp;  // time of most recent value
     private int status;  // status of listener
-    private int accuracy = SensorManager.SENSOR_STATUS_UNRELIABLE;
 
     private SensorManager sensorManager;  // Sensor manager
     private Sensor mSensor;  // Orientation sensor returned by sensor manager
@@ -167,7 +166,6 @@ public class MagnetometerListener extends CordovaPlugin implements SensorEventLi
             this.sensorManager.unregisterListener(this);
         }
         this.setStatus(MagnetometerListener.STOPPED);
-        this.accuracy = SensorManager.SENSOR_STATUS_UNRELIABLE;
     }
 
     /**
@@ -189,16 +187,7 @@ public class MagnetometerListener extends CordovaPlugin implements SensorEventLi
      * @param accuracy
      */
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // Only look at magnetometer events
-        if (sensor.getType() != Sensor.TYPE_MAGNETIC_FIELD) {
-            return;
-        }
-
-        // If not running, then just return
-        if (this.status == MagnetometerListener.STOPPED) {
-            return;
-        }
-        this.accuracy = accuracy;
+        // DO NOTHING
     }
 
     /**
@@ -218,16 +207,13 @@ public class MagnetometerListener extends CordovaPlugin implements SensorEventLi
         }
         this.setStatus(MagnetometerListener.RUNNING);
 
-        if (this.accuracy >= SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM) {
+        // Save time that event was received
+        this.timestamp = event.timestamp;
+        this.x = event.values[0];
+        this.y = event.values[1];
+        this.z = event.values[2];
 
-            // Save time that event was received
-            this.timestamp = event.timestamp;
-            this.x = event.values[0];
-            this.y = event.values[1];
-            this.z = event.values[2];
-
-            this.win();
-        }
+        this.win();
     }
 
     /**
