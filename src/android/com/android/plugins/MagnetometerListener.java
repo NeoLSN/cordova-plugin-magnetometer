@@ -208,7 +208,7 @@ public class MagnetometerListener extends CordovaPlugin implements SensorEventLi
         this.setStatus(MagnetometerListener.RUNNING);
 
         // Save time that event was received
-        this.timestamp = event.timestamp;
+        this.timestamp = System.currentTimeMillis();
         this.x = event.values[0];
         this.y = event.values[1];
         this.z = event.values[2];
@@ -270,7 +270,7 @@ public class MagnetometerListener extends CordovaPlugin implements SensorEventLi
             r.put("x", this.x);
             r.put("y", this.y);
             r.put("z", this.z);
-            r.put("timestamp", this.timestamp / 1000);
+            r.put("timestamp", this.timestamp);
         } catch (JSONException e) {
             e.printStackTrace();
         }
